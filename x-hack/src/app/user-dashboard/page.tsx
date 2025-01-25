@@ -1,4 +1,5 @@
 // /pages/user-dashboard.tsx
+"use client";
 import React, { useState } from "react";
 import { db } from "../../../firbase configuration/firebaseconfig";
 import { collection, addDoc } from "firebase/firestore";

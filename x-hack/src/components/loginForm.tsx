@@ -17,7 +17,6 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
 
     try {
-      // Attempt to log the user in
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -25,26 +24,39 @@ const LoginForm: React.FC = () => {
       );
       console.log("Logged in as:", userCredential.user);
 
-      // Get the user document from Firestore
-      const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+      console.log("Fetching user data from Firestore...");
+      let userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+
+      if (!userDoc.exists()) {
+        console.log(
+          "User not found in 'users'. Checking 'admins' collection..."
+        );
+        userDoc = await getDoc(doc(db, "admins", userCredential.user.uid));
+      }
 
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        const userRole = userData.role; // Get the role from Firestore
+        const userRole = userData?.role;
 
-        // Redirect based on user role
+        console.log(`User role fetched: ${userRole}`);
+        console.log(`Redirecting user to the ${userRole}-dashboard...`);
+
         if (userRole === "admin") {
-          router.push("/admin-dashboard"); // Admin Dashboard
+          router.push("/admin-dashboard");
         } else if (userRole === "user") {
-          router.push("/user-dashboard"); // User Panel
+          router.push("/user-dashboard");
         } else {
-          setError("Role not found or unassigned.");
+          console.error("Unknown role or missing role field in database.");
+          setError(
+            "Your account role is not recognized. Please contact support."
+          );
         }
       } else {
-        setError("User data not found! Please contact support.");
+        setError("User data not found in database.");
       }
     } catch (err: any) {
-      setError(err.message); // Display error message
+      console.error("Error during login:", err.message);
+      setError("Authentication failed. Check your credentials.");
     }
   };
 

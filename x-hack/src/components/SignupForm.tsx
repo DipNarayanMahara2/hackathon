@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, FormEvent } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../firbase configuration/firebaseconfig";
@@ -31,13 +29,21 @@ const SignupForm: React.FC = () => {
         password
       );
 
-      // Save additional user information (including role) in Firestore
       const user = userCredential.user;
-      await setDoc(doc(db, "users", user.uid), {
+      const userData = {
         username: username,
         email: email,
-        role: role, // Saving the role (default 'user')
-      });
+        role: role,
+      };
+
+      console.log("User Data:", userData); // Add this for debugging
+
+      // Save the user in the correct collection based on the role
+      if (role === "admin") {
+        await setDoc(doc(db, "admins", user.uid), userData); // Admin collection
+      } else {
+        await setDoc(doc(db, "users", user.uid), userData); // Users collection
+      }
 
       // Redirect to the login page after successful sign-up
       router.push("/login");
@@ -51,6 +57,7 @@ const SignupForm: React.FC = () => {
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-4">Signup</h2>
 
+        {/* Display error message if any */}
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
         <form onSubmit={handleFormSubmit}>

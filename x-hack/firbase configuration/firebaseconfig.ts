@@ -1,5 +1,6 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
+import { enableLogging } from "firebase/database";
 import { getAuth, Auth } from "firebase/auth";
 
 // Your Firebase configuration
@@ -24,7 +25,11 @@ if (!getApps().length) {
   firebaseApp = getApps()[0]; // Use the already initialized app
 }
 
+// Initialize Firestore and Auth
 db = getFirestore(firebaseApp);
 auth = getAuth(firebaseApp);
+
+// Enable Firestore logging for debugging
+enableLogging(true); // This enables Firestore debug logging
 
 export { firebaseApp, auth, db };
