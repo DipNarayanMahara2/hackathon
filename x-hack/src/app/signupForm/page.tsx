@@ -1,10 +1,10 @@
-// pages/login.tsx (Login page)
+// pages/signup.tsx (Signup page)
 "use client";
 
-import SignupForm from "@/components/signupForm";
+import SignupForm from "@/components/SignupForm";
 
-const signupForm = () => {
+const SignupPage = () => {
   return <SignupForm />;
 };
 
-export default signupForm;
+export default SignupPage;

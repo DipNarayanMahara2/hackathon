@@ -1,7 +1,10 @@
-import LoginSignupForm from "@/components/loginSingupForm";
+// pages/login.tsx (Login page)
+"use client";
 
-const loginPage = () => {
-  return <LoginSignupForm />;
+import LoginForm from "@/components/loginForm";
+
+const LoginPage = () => {
+  return <LoginForm />;
 };
 
-export default loginPage;
+export default LoginPage;
