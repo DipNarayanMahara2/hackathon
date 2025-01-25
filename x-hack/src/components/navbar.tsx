@@ -6,7 +6,7 @@ const Navbar = () => {
       <nav className="container mx-auto flex justify-between items-center ">
         {/* <h1 className="text-2xl font-bold">Trash to Treasure</h1> */}
         <a href="/">
-          <img src="/logo.png" alt="logo" className="width" />
+          <img src="/logo.png" alt="logo" className="imgWidth" />
         </a>
         <ul className="flex gap-6">
           <li>
@@ -22,11 +22,6 @@ const Navbar = () => {
           <li>
             <a href="/contact" className="hover:underline">
               Contact
-            </a>
-          </li>
-          <li>
-            <a href="/signupForm" className="hover:underline">
-              Login/Sign Up
             </a>
           </li>
         </ul>
