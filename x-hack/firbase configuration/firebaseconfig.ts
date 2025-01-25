@@ -1,6 +1,6 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
-// import { getAuth, Auth } from "firebase/auth";
+import { getAuth, Auth } from "firebase/auth";
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -16,7 +16,7 @@ const firebaseConfig = {
 // Lazy initialization
 let firebaseApp: FirebaseApp;
 let db: Firestore;
-// let auth: Auth;
+let auth: Auth;
 
 if (!getApps().length) {
   firebaseApp = initializeApp(firebaseConfig);
@@ -25,6 +25,6 @@ if (!getApps().length) {
 }
 
 db = getFirestore(firebaseApp);
-// auth = getAuth(firebaseApp);
+auth = getAuth(firebaseApp);
 
-export { firebaseApp, db };
+export { firebaseApp, auth, db };
